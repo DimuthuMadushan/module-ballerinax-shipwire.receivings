@@ -282,7 +282,8 @@ public type CreateReceivingRequest record {
     Shipment shipments;
     # Items being shipped to Shipwire
     CreateReceivingItem[] items;
-    CreateReceivingRequest extendedAttributes?;
+    # Extended attributes of the advance ship notice
+    ExtendedAttributes[] extendedAttributes?;
     Label labels?;
     InstructionsRecipient[] instructionsRecipients?;
 };
@@ -505,6 +506,13 @@ public type ReceivingLabelsResponseResource record {
     ReceivingLabelsResponseResourceItems[] items?;
 };
 
+public type ReceivingHoldsResourceItems record {
+    # Holds that apply to this advance ship notice
+    ReceivingHold 'resource?;
+    # A URL that gives more information about the linked resource. A 'null' value would mean that no further information is available for that resource
+    string resourceLocation?;
+};
+
 public type OptionsResource record {
     # This is the place where the warehouse is located
     string warehouseRegion?;
@@ -521,6 +529,27 @@ public type CreateReceivingResponse record {
     *ListReceivingsResponseOffset;
     *CreateReceivingResponseResource;
     *CreateReceivingResponseResourceItems;
+};
+
+# Holds that apply to this advance ship notice
+public type ReceivingHold record {
+    # This is the receving order ID in the shipwire system on which the hold is applied
+    int orderId?;
+    # This is the description given for the hold in the Shipwire system
+    @constraint:String {maxLength: 255, minLength: 1}
+    string description?;
+    # This is the date on which the hold is applied to the order
+    string appliedDate?;
+    # This is the date on which the hold is removed from the order
+    string clearedDate?;
+    # This is the unique ID assigned to a particular hold in the shipwire system
+    int id?;
+    # This is the receving order ID in the external system on which the hold is applied
+    @constraint:String {maxLength: 32, minLength: 1}
+    string externalOrderId?;
+    # This is the type of hold due to which the order is stuck. (e.g. customer, admin, etc.)
+    @constraint:String {maxLength: 100, minLength: 1}
+    string 'type?;
 };
 
 public type ReceivingTrackingsResponseResource record {
@@ -653,6 +682,13 @@ public type CancelReceivingLabelsResponse record {
 };
 
 public type ReceivingHoldsResponseResource record {
-    # This is an integer that matches the offset given in the request and dictates the number of items to skip while fetching results. For example, there is a preset limit of 20 results per page. If there are 30 total results and offset is set to 20, then the response will show the second "page" of results, with items 21 to 30. type: integer example: 0 total: description: Total number of available items in the API response. type: integer example: 1 previous: description: A link used to fetch the previous set or page of items in the API response. type: string example: null next: description: A link used to fetch the next set or page of items in the API response. type: string example: null items: type: array items: type: object properties: resourceLocation: example: null type: string resource: allOf: - $ref: 
-    record {} offset?;
+    # A link used to fetch the next set or page of items in the API response
+    string next?;
+    # Total number of available items in the API response
+    int total?;
+    # This is an integer that matches the offset given in the request and dictates the number of items to skip while fetching results. For example, there is a preset limit of 20 results per page. If there are 30 total results and offset is set to 20, then the response will show the second "page" of results, with items 21 to 30
+    int offset?;
+    # A link used to fetch the previous set or page of items in the API response
+    string previous?;
+    ReceivingHoldsResourceItems[] items?;
 };

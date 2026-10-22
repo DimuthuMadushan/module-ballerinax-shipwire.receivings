@@ -22,20 +22,19 @@ listener http:Listener ep0 = new (9090);
 service / on ep0 {
     # Get list of advance ship notices
     #
-    # + expand - Expand receivings data in the response
-    # + commerceName - Filter by commerceName (comma separated list)
-    # + transactionId - Filter by transactionId (comma separated list)
-    # + externalId - Filter by externalId (comma separated list)
-    # + orderId - Filter by orderId (comma separated list)
-    # + orderNo - Filter by orderNo (comma separated list)
-    # + status - Filter by status (comma separated list)
-    # + updatedAfter - Only show resources updated after this date
-    # + warehouseId - Filter by warehouseId (comma separated list)
-    # + warehouseExternalId - Filter by warehouseExternalId (comma separated list)
-    # + vendorId - Filter by vendorId
-    # + vendorExternalId - Filter by vendorExternalId
-    # + return - OK
-    resource function get v3/receivings(("holds"|"instructionsRecipients"|"items"|"shipments"|"labels"|"trackings"|"all")[]? expand, string? commerceName, string? transactionId, string? externalId, string? orderId, string? orderNo, "processed"|"canceled"|"completed"|"delivered"|"returned"|"submitted"|"held"|"tracked"? status, string? updatedAfter, string? warehouseId, string? warehouseExternalId, string? vendorId, string? vendorExternalId) returns ListReceivingsResponse {
+    # + request - The incoming request; the `status` filter and both `expand` values `holds` and `items` are required
+    # + return - OK, or Bad Request when the expected filter and expand values are missing
+    resource function get v3/receivings(http:Request request) returns ListReceivingsResponse|http:BadRequest {
+        string? status = request.getQueryParamValue("status");
+        string[] expand = [];
+        foreach string value in request.getQueryParamValues("expand") ?: [] {
+            foreach string part in re `,`.split(value) {
+                expand.push(part.trim());
+            }
+        }
+        if status != "processed" || expand.indexOf("holds") is () || expand.indexOf("items") is () {
+            return <http:BadRequest>{body: "Expected status=processed and expand=holds,items"};
+        }
         return {
             status: 200,
             message: "Success",

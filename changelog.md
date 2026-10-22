@@ -9,4 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Regenerate the connector from the Shipwire Receivings OpenAPI specification, covering all 14 operations as remote methods.
-- Add a mock server based test suite and two usage examples.
+- Add a mock server-based test suite and two usage examples.

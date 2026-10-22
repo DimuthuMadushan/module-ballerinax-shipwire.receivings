@@ -31,6 +31,16 @@ These changes are done in order to improve the overall usability, and as workaro
 - **Updated**: Each now has a description. The `$ref` properties are wrapped as `allOf` with a description. This change was made in the original spec `docs/spec/openapi.yml`.
 - **Reason**: Removes the `undocumented field` compiler warnings in the generated types.
 
+5. Fix the self-referencing `extendedAttributes` property of the create request
+- **Original**: `CreateAnAdvanceShipNoticeRequest.extendedAttributes` referenced `CreateAnAdvanceShipNoticeRequest` itself.
+- **Updated**: It is an array of `ExtendedAttributes` with a description. This change was made in the original spec `docs/spec/openapi.yml`.
+- **Reason**: The self-reference made the request type recursive and did not match the API.
+
+6. Repair the corrupted holds response resource schema
+- **Original**: In `GetHoldDetailsResponse_resource` the description of `offset` swallowed the rest of the schema as one quoted string, so `total`, `previous`, `next` and `items` were missing.
+- **Updated**: `offset` is an integer with its description, and `total`, `previous`, `next` and `items` are separate properties like the sibling resource schemas. `items` is an array of `ReceivingHolds_resource_items`. This change was made in the original spec `docs/spec/openapi.yml`.
+- **Reason**: Restores the paging fields and hold items of the response.
+
 ## OpenAPI cli command
 
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.

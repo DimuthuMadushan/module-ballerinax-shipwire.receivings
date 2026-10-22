@@ -30,9 +30,15 @@ final Client shipwire = check new ({
     httpVersion: http:HTTP_1_1
 }, serviceUrl);
 
+// Write operations always run against the mock, so they never modify live data.
+final Client mockShipwire = check new ({
+    auth: {username: "test_user", password: "test_password"},
+    httpVersion: http:HTTP_1_1
+}, "http://localhost:9090");
+
 @test:Config {groups: ["live_tests", "mock_tests"]}
 function testListReceivings() returns error? {
-    ListReceivingsResponse response = check shipwire->listReceivings();
+    ListReceivingsResponse response = check shipwire->listReceivings(status = "processed", expand = ["holds", "items"]);
     test:assertEquals(response.status, 200);
 }
 
@@ -51,7 +57,7 @@ function testCreateReceiving() returns error? {
         shipments: {length: 10.5, width: 8.0, weight: 12.0, 'type: "box"},
         items: [{productId: 9876, quantity: 10}]
     };
-    CreateReceivingResponse response = check shipwire->createReceiving(payload);
+    CreateReceivingResponse response = check mockShipwire->createReceiving(payload);
     test:assertEquals(response.status, 200);
 }
 
@@ -65,25 +71,25 @@ function testUpdateReceiving() returns error? {
         items: [{productId: 9876, quantity: 12}],
         externalId: "ASN-2026-0001"
     };
-    ReceivingResponse response = check shipwire->updateReceiving(receivingId, payload);
+    ReceivingResponse response = check mockShipwire->updateReceiving(receivingId, payload);
     test:assertEquals(response.status, 200);
 }
 
 @test:Config {groups: ["mock_tests"]}
 function testCancelReceiving() returns error? {
-    CancelReceivingResponse response = check shipwire->cancelReceiving(receivingId);
+    CancelReceivingResponse response = check mockShipwire->cancelReceiving(receivingId);
     test:assertEquals(response.status, 200);
 }
 
 @test:Config {groups: ["mock_tests"]}
 function testCancelReceivingLabels() returns error? {
-    CancelReceivingLabelsResponse response = check shipwire->cancelReceivingLabels(receivingId);
+    CancelReceivingLabelsResponse response = check mockShipwire->cancelReceivingLabels(receivingId);
     test:assertEquals(response.status, 200);
 }
 
 @test:Config {groups: ["mock_tests"]}
 function testMarkReceivingComplete() returns error? {
-    MarkReceivingCompleteResponse response = check shipwire->markReceivingComplete(receivingId);
+    MarkReceivingCompleteResponse response = check mockShipwire->markReceivingComplete(receivingId);
     test:assertEquals(response.status, 200);
 }
 

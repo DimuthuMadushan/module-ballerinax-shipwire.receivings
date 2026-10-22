@@ -985,7 +985,10 @@ definitions:
         items:
           $ref: '#/definitions/InstructionsRecipient'
       extendedAttributes:
-        $ref: '#/definitions/CreateAnAdvanceShipNoticeRequest'
+        type: array
+        description: Extended attributes of the advance ship notice
+        items:
+          $ref: '#/definitions/ExtendedAttributes'
     title: Create an advance ship notice request
   GetAdvanceShipNoticeResponse:
     type: object
@@ -1728,7 +1731,25 @@ definitions:
   GetHoldDetailsResponse_resource:
     properties:
       offset:
-        description: 'This is an integer that matches the offset given in the request and dictates the number of items to skip while fetching results. For example, there is a preset limit of 20 results per page. If there are 30 total results and offset is set to 20, then the response will show the second "page" of results, with items 21 to 30. type: integer example: 0 total: description: Total number of available items in the API response. type: integer example: 1 previous: description: A link used to fetch the previous set or page of items in the API response. type: string example: null next: description: A link used to fetch the next set or page of items in the API response. type: string example: null items: type: array items: type: object properties: resourceLocation: example: null type: string resource: allOf: - $ref: '
+        type: integer
+        example: 0
+        description: This is an integer that matches the offset given in the request and dictates the number of items to skip while fetching results. For example, there is a preset limit of 20 results per page. If there are 30 total results and offset is set to 20, then the response will show the second "page" of results, with items 21 to 30.
+      total:
+        type: integer
+        example: 1
+        description: Total number of available items in the API response.
+      previous:
+        type: string
+        example: null
+        description: A link used to fetch the previous set or page of items in the API response.
+      next:
+        type: string
+        example: null
+        description: A link used to fetch the next set or page of items in the API response.
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/ReceivingHolds_resource_items'
   GetInstructionsRecipientsDetailsResponse_resource_items:
     properties:
       resourceLocation:

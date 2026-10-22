@@ -14,6 +14,8 @@ This example creates an advance ship notice for a Shipwire warehouse and, when e
   productId = <Product ID>
   quantity = <Quantity>
   cancelAfterCreate = false
+  shipFrom = { address1 = "<Address line 1>", city = "<City>", state = "<State>", postalCode = "<Postal code>", country = "<Country>" }
+  shipment = { type = "box", length = <Length>, width = <Width>, height = <Height>, weight = <Weight> }
   ```
 
 ## Run the example

@@ -9,15 +9,17 @@ configurable int:Signed32 warehouseId = ?;
 configurable int productId = ?;
 configurable int quantity = ?;
 configurable boolean cancelAfterCreate = false;
+configurable receivings:AddressResource shipFrom = ?;
+configurable receivings:Shipment shipment = ?;
 
 public function main() returns error? {
     receivings:Client shipwire = check new ({auth: {username, password}});
 
     receivings:CreateReceivingRequest request = {
         arrangement: {'type: "none"},
-        shipFrom: {address1: "1 Main St", city: "Austin", state: "TX", postalCode: "78701", country: "US"},
+        shipFrom,
         options: {warehouseId},
-        shipments: {length: 10.5, width: 8.0, weight: 12.0, 'type: "box"},
+        shipments: shipment,
         items: [{productId, quantity}]
     };
     receivings:CreateReceivingResponse created = check shipwire->createReceiving(request);

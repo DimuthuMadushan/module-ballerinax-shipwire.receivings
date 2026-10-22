@@ -544,17 +544,27 @@ components:
     ReceivingHoldsResponseResource:
       type: object
       properties:
+        next:
+          type: string
+          description: A link used to fetch the next set or page of items in the API response
+        total:
+          type: integer
+          description: Total number of available items in the API response
+          example: 1
         offset:
-          type: object
-          description: 'This is an integer that matches the offset given in the request and dictates the
+          type: integer
+          description: This is an integer that matches the offset given in the request and dictates the
             number of items to skip while fetching results. For example, there is a preset limit of 20
             results per page. If there are 30 total results and offset is set to 20, then the response
-            will show the second "page" of results, with items 21 to 30. type: integer example: 0 total:
-            description: Total number of available items in the API response. type: integer example: 1
-            previous: description: A link used to fetch the previous set or page of items in the API response.
-            type: string example: null next: description: A link used to fetch the next set or page of
-            items in the API response. type: string example: null items: type: array items: type: object
-            properties: resourceLocation: example: null type: string resource: allOf: - $ref: '
+            will show the second "page" of results, with items 21 to 30
+          example: 0
+        previous:
+          type: string
+          description: A link used to fetch the previous set or page of items in the API response
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReceivingHoldsResourceItems'
     DocumentsResource:
       type: object
       properties:
@@ -1870,7 +1880,10 @@ components:
           items:
             $ref: '#/components/schemas/CreateReceivingItem'
         extendedAttributes:
-          $ref: '#/components/schemas/CreateReceivingRequest'
+          type: array
+          description: Extended attributes of the advance ship notice
+          items:
+            $ref: '#/components/schemas/ExtendedAttributes'
         labels:
           $ref: '#/components/schemas/Label'
         instructionsRecipients:
