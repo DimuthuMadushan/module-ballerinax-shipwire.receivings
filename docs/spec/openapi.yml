@@ -657,9 +657,13 @@ definitions:
         example: 2
         description: The number of SKU items found to be damaged (during receiving or otherwise) within the warehouse and unavailable for fulfillment.
       lotControl:
-        $ref: '#/definitions/ReceivingItem_lotControl'
+        allOf:
+        - $ref: '#/definitions/ReceivingItem_lotControl'
+        description: Lot control details (lot, expiration date and quantity) of the item
       extendedAttributes:
-        $ref: '#/definitions/ReceivingItem_extendedAttributes'
+        allOf:
+        - $ref: '#/definitions/ReceivingItem_extendedAttributes'
+        description: Extended attributes of the item
     title: Receiving Item
     description: Item being shipped to Shipwire
   ReceivingItems:
@@ -846,6 +850,7 @@ definitions:
         description: Contact phone number of the person from Shipwire system responsible for coordinating with the carrier or supplier for arranging delivery if needed.
       type:
         type: string
+        description: The arrangement type, which tells Shipwire how the shipment will be delivered to the warehouse
         format: enum
         example: none
         enum:
@@ -1050,7 +1055,9 @@ definitions:
         example: https://api.shipwire.com/api/v3/receivings/8411/holds?expand=all
         description: A URL that gives more information about the linked resource. A 'null' value would mean that no further information is available for that resource.
       resource:
-        $ref: '#/definitions/GetHoldDetailsResponse_resource'
+        allOf:
+        - $ref: '#/definitions/GetHoldDetailsResponse_resource'
+        description: The holds placed on the receiving, with links to each hold
     title: Get instructions recipients details response
     description: Get instructions recipients details response
   GetInstructionsRecipientsDetailsResponse:
@@ -1069,7 +1076,9 @@ definitions:
         example: https://api.shipwire.com/api/v3/receivings/8411/instructionsRecipients?offset=0&limit=20
         description: A URL that gives more information about the linked resource. A 'null' value would mean that no further information is available for that resource.
       resource:
-        $ref: '#/definitions/GetInstructionsRecipientsDetailsResponse_resource'
+        allOf:
+        - $ref: '#/definitions/GetInstructionsRecipientsDetailsResponse_resource'
+        description: The instructions and recipients contact details of the receiving
     title: Get instructions recipients details response
     description: Get instructions recipients details response
   GetReceivingExtendedAttributesResponse:
@@ -1088,7 +1097,9 @@ definitions:
         example: https://api.shipwire.com/api/v3/receivings/8411/instructionsRecipients?offset=0&limit=20
         description: A URL that gives more information about the linked resource. A 'null' value would mean that no further information is available for that resource.
       resource:
-        $ref: '#/definitions/GetInstructionsRecipientsDetailsResponse_resource'
+        allOf:
+        - $ref: '#/definitions/GetInstructionsRecipientsDetailsResponse_resource'
+        description: The extended attributes of the receiving
     title: Get receiving extended attributes response
     description: Get receiving extended attributes response
   GetItemsDetailResponse:
@@ -1107,7 +1118,9 @@ definitions:
         example: https://api.shipwire.com/api/v3/receivings/8411/items?expand=all&offset=0&limit=20
         description: A URL that gives more information about the linked resource. A 'null' value would mean that no further information is available for that resource.
       resource:
-        $ref: '#/definitions/GetInstructionsRecipientsDetailsResponse_resource'
+        allOf:
+        - $ref: '#/definitions/GetInstructionsRecipientsDetailsResponse_resource'
+        description: The items being shipped to Shipwire in the receiving
     title: Get items details response
     description: Get items details response
   GetShipmentDetailsResponse:
@@ -1126,7 +1139,9 @@ definitions:
         example: https://api.shipwire.com/api/v3/receivings/8411/shipments?expand=all
         description: A URL that gives more information about the linked resource. A 'null' value would mean that no further information is available for that resource.
       resource:
-        $ref: '#/definitions/GetShipmentDetailsResponse_resource'
+        allOf:
+        - $ref: '#/definitions/GetShipmentDetailsResponse_resource'
+        description: The shipments of the receiving
     title: Get shipments details response
     description: Get shipment details response
   GetTrackingsDetailResponse:
@@ -1145,7 +1160,9 @@ definitions:
         example: https://api.shipwire.com/api/v3/receivings/8411/trackings?expand=all
         description: A URL that gives more information about the linked resource. A 'null' value would mean that no further information is available for that resource.
       resource:
-        $ref: '#/definitions/GetTrackingsDetailResponse_resource'
+        allOf:
+        - $ref: '#/definitions/GetTrackingsDetailResponse_resource'
+        description: The shipment trackings of the receiving
     title: Get trackings details response
     description: Get trackings details response
   GetLabelsDetailResponse:
@@ -1164,7 +1181,9 @@ definitions:
         example: https://api.shipwire.com/api/v3/receivings/8411/labels?expand=all
         description: A URL that gives more information about the linked resource. A 'null' value would mean that no further information is available for that resource.
       resource:
-        $ref: '#/definitions/GetLabelsDetailResponse_resource'
+        allOf:
+        - $ref: '#/definitions/GetLabelsDetailResponse_resource'
+        description: The shipping labels of the receiving
     title: Get labels details response
     description: Get labels details response
   MarkTheReceivingCompletedResponse:

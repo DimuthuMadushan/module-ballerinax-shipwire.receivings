@@ -26,6 +26,11 @@ These changes are done in order to improve the overall usability, and as workaro
 - **Updated**: Operations are named `listReceivings`, `createReceiving`, `getReceiving`, `updateReceiving`, `cancelReceiving`, `cancelReceivingLabels`, `listReceivingHolds`, `listReceivingInstructionsRecipients`, `listReceivingExtendedAttributes`, `listReceivingItems`, `listReceivingShipments`, `listReceivingTrackings`, `listReceivingLabels` and `markReceivingComplete`. Response schemas follow `<Entity>Response` (for example `ListReceivingsResponse`, `ReceivingResponse`). The decisions are persisted in `docs/spec/ai-mappings.json`.
 - **Reason**: Intent-revealing, stable names for the generated client methods and types.
 
+4. Document the undocumented response and item fields
+- **Original**: The `resource` property of the receiving response schemas (holds, instructions recipients, extended attributes, items, shipments, trackings, labels), `lotControl` and `extendedAttributes` on `ReceivingItem`, and `type` on `Arrangement` had no description.
+- **Updated**: Each now has a description. The `$ref` properties are wrapped as `allOf` with a description. This change was made in the original spec `docs/spec/openapi.yml`.
+- **Reason**: Removes the `undocumented field` compiler warnings in the generated types.
+
 ## OpenAPI cli command
 
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.

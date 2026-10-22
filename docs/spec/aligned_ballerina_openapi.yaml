@@ -646,7 +646,10 @@ components:
       type: object
       properties:
         resource:
-          $ref: '#/components/schemas/ReceivingInstructionsRecipientsResponseResource'
+          type: object
+          description: The instructions and recipients contact details of the receiving
+          allOf:
+          - $ref: '#/components/schemas/ReceivingInstructionsRecipientsResponseResource'
         message:
           type: string
           description: This is the HTTP status message
@@ -666,7 +669,10 @@ components:
       type: object
       properties:
         resource:
-          $ref: '#/components/schemas/ReceivingInstructionsRecipientsResponseResource'
+          type: object
+          description: The items being shipped to Shipwire in the receiving
+          allOf:
+          - $ref: '#/components/schemas/ReceivingInstructionsRecipientsResponseResource'
         message:
           type: string
           description: This is the HTTP status message
@@ -942,7 +948,10 @@ components:
       type: object
       properties:
         resource:
-          $ref: '#/components/schemas/ReceivingInstructionsRecipientsResponseResource'
+          type: object
+          description: The extended attributes of the receiving
+          allOf:
+          - $ref: '#/components/schemas/ReceivingInstructionsRecipientsResponseResource'
         message:
           type: string
           description: This is the HTTP status message
@@ -989,7 +998,10 @@ components:
       type: object
       properties:
         resource:
-          $ref: '#/components/schemas/ReceivingShipmentsResponseResource'
+          type: object
+          description: The shipments of the receiving
+          allOf:
+          - $ref: '#/components/schemas/ReceivingShipmentsResponseResource'
         message:
           type: string
           description: This is the HTTP status message
@@ -1262,13 +1274,19 @@ components:
           description: The number of pending SKU items expected to be received at the warehouse
           example: 2
         lotControl:
-          $ref: '#/components/schemas/ReceivingItemLotControl'
+          type: object
+          description: Lot control details (lot, expiration date and quantity) of the item
+          allOf:
+          - $ref: '#/components/schemas/ReceivingItemLotControl'
         good:
           type: integer
           description: The number of SKU items ready for fulfillment in the warehouse
           example: 2
         extendedAttributes:
-          $ref: '#/components/schemas/ReceivingItemExtendedAttributes'
+          type: object
+          description: Extended attributes of the item
+          allOf:
+          - $ref: '#/components/schemas/ReceivingItemExtendedAttributes'
         orderExternalId:
           maxLength: 32
           minLength: 1
@@ -1500,7 +1518,10 @@ components:
       type: object
       properties:
         resource:
-          $ref: '#/components/schemas/ReceivingLabelsResponseResource'
+          type: object
+          description: The shipping labels of the receiving
+          allOf:
+          - $ref: '#/components/schemas/ReceivingLabelsResponseResource'
         message:
           type: string
           description: This is the HTTP status message
@@ -1623,7 +1644,10 @@ components:
       type: object
       properties:
         resource:
-          $ref: '#/components/schemas/ReceivingTrackingsResponseResource'
+          type: object
+          description: The shipment trackings of the receiving
+          allOf:
+          - $ref: '#/components/schemas/ReceivingTrackingsResponseResource'
         message:
           type: string
           description: This is the HTTP status message
@@ -1781,7 +1805,10 @@ components:
       type: object
       properties:
         resource:
-          $ref: '#/components/schemas/ReceivingHoldsResponseResource'
+          type: object
+          description: The holds placed on the receiving, with links to each hold
+          allOf:
+          - $ref: '#/components/schemas/ReceivingHoldsResponseResource'
         message:
           type: string
           description: This is the HTTP status message
@@ -1865,6 +1892,8 @@ components:
           example: Andrew Carr
         type:
           type: string
+          description: The arrangement type, which tells Shipwire how the shipment will be delivered to
+            the warehouse
           format: enum
           example: none
           enum:

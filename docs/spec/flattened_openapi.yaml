@@ -734,7 +734,10 @@ components:
             that resource.
           example: https://api.shipwire.com/api/v3/receivings/8411/instructionsRecipients?offset=0&limit=20
         resource:
-          $ref: "#/components/schemas/GetInstructionsRecipientsDetailsResponse_resource"
+          type: object
+          description: The instructions and recipients contact details of the receiving
+          allOf:
+          - $ref: "#/components/schemas/GetInstructionsRecipientsDetailsResponse_resource"
       description: Get instructions recipients details response
     GetItemsDetailResponse:
       title: Get items details response
@@ -755,7 +758,10 @@ components:
             that resource.
           example: https://api.shipwire.com/api/v3/receivings/8411/items?expand=all&offset=0&limit=20
         resource:
-          $ref: "#/components/schemas/GetInstructionsRecipientsDetailsResponse_resource"
+          type: object
+          description: The items being shipped to Shipwire in the receiving
+          allOf:
+          - $ref: "#/components/schemas/GetInstructionsRecipientsDetailsResponse_resource"
       description: Get items details response
     Trackings_resource:
       type: object
@@ -1050,7 +1056,10 @@ components:
             that resource.
           example: https://api.shipwire.com/api/v3/receivings/8411/instructionsRecipients?offset=0&limit=20
         resource:
-          $ref: "#/components/schemas/GetInstructionsRecipientsDetailsResponse_resource"
+          type: object
+          description: The extended attributes of the receiving
+          allOf:
+          - $ref: "#/components/schemas/GetInstructionsRecipientsDetailsResponse_resource"
       description: Get receiving extended attributes response
     GetListOfAdvanceShipNoticesResponse1:
       title: Get list of advance ship notices response
@@ -1074,7 +1083,10 @@ components:
             that resource.
           example: https://api.shipwire.com/api/v3/receivings/8411/shipments?expand=all
         resource:
-          $ref: "#/components/schemas/GetShipmentDetailsResponse_resource"
+          type: object
+          description: The shipments of the receiving
+          allOf:
+          - $ref: "#/components/schemas/GetShipmentDetailsResponse_resource"
       description: Get shipment details response
     Shipment:
       type: object
@@ -1241,9 +1253,16 @@ components:
             or otherwise) within the warehouse and unavailable for fulfillment.
           example: 2
         lotControl:
-          $ref: "#/components/schemas/ReceivingItem_lotControl"
+          type: object
+          description: "Lot control details (lot, expiration date and quantity) of\
+            \ the item"
+          allOf:
+          - $ref: "#/components/schemas/ReceivingItem_lotControl"
         extendedAttributes:
-          $ref: "#/components/schemas/ReceivingItem_extendedAttributes"
+          type: object
+          description: Extended attributes of the item
+          allOf:
+          - $ref: "#/components/schemas/ReceivingItem_extendedAttributes"
       description: Item being shipped to Shipwire
     Options_resource:
       type: object
@@ -1575,7 +1594,10 @@ components:
             that resource.
           example: https://api.shipwire.com/api/v3/receivings/8411/labels?expand=all
         resource:
-          $ref: "#/components/schemas/GetLabelsDetailResponse_resource"
+          type: object
+          description: The shipping labels of the receiving
+          allOf:
+          - $ref: "#/components/schemas/GetLabelsDetailResponse_resource"
       description: Get labels details response
     Routing_resource:
       type: object
@@ -1785,7 +1807,10 @@ components:
             that resource.
           example: https://api.shipwire.com/api/v3/receivings/8411/trackings?expand=all
         resource:
-          $ref: "#/components/schemas/GetTrackingsDetailResponse_resource"
+          type: object
+          description: The shipment trackings of the receiving
+          allOf:
+          - $ref: "#/components/schemas/GetTrackingsDetailResponse_resource"
       description: Get trackings details response
     Labels_resource:
       type: object
@@ -1981,7 +2006,10 @@ components:
             that resource.
           example: https://api.shipwire.com/api/v3/receivings/8411/holds?expand=all
         resource:
-          $ref: "#/components/schemas/GetHoldDetailsResponse_resource"
+          type: object
+          description: "The holds placed on the receiving, with links to each hold"
+          allOf:
+          - $ref: "#/components/schemas/GetHoldDetailsResponse_resource"
       description: Get instructions recipients details response
     CreateAnAdvanceShipNoticeRequest:
       title: Create an advance ship notice request
@@ -2055,6 +2083,8 @@ components:
           example: "7822878787"
         type:
           type: string
+          description: "The arrangement type, which tells Shipwire how the shipment\
+            \ will be delivered to the warehouse"
           format: enum
           example: none
           enum:

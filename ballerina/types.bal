@@ -76,6 +76,7 @@ public type GetReceivingQueries record {
 
 # Get shipment details response
 public type ReceivingShipmentsResponse record {
+    # The shipments of the receiving
     ReceivingShipmentsResponseResource 'resource?;
     # This is the HTTP status message
     string message?;
@@ -303,6 +304,7 @@ public type Shipment record {
 
 # Get instructions recipients details response
 public type ReceivingInstructionsRecipientsResponse record {
+    # The instructions and recipients contact details of the receiving
     ReceivingInstructionsRecipientsResponseResource 'resource?;
     # This is the HTTP status message
     string message?;
@@ -334,6 +336,7 @@ public type ReceivingInstructionsRecipientsResponseResourceItems record {
 
 # Get labels details response
 public type ReceivingLabelsResponse record {
+    # The shipping labels of the receiving
     ReceivingLabelsResponseResource 'resource?;
     # This is the HTTP status message
     string message?;
@@ -375,9 +378,11 @@ public type ReceivingItem record {
     int expected?;
     # The number of pending SKU items expected to be received at the warehouse
     int pending?;
+    # Lot control details (lot, expiration date and quantity) of the item
     ReceivingItemLotControl lotControl?;
     # The number of SKU items ready for fulfillment in the warehouse
     int good?;
+    # Extended attributes of the item
     ReceivingItemExtendedAttributes extendedAttributes?;
     # This is the receving order ID in the external system on which the hold is applied
     @constraint:String {maxLength: 32, minLength: 1}
@@ -460,6 +465,7 @@ public type ReceivingResponse record {
 
 # Get instructions recipients details response
 public type ReceivingHoldsResponse record {
+    # The holds placed on the receiving, with links to each hold
     ReceivingHoldsResponseResource 'resource?;
     # This is the HTTP status message
     string message?;
@@ -471,6 +477,7 @@ public type ReceivingHoldsResponse record {
 
 # Get trackings details response
 public type ReceivingTrackingsResponse record {
+    # The shipment trackings of the receiving
     ReceivingTrackingsResponseResource 'resource?;
     # This is the HTTP status message
     string message?;
@@ -567,6 +574,7 @@ public type ReceivingShipmentsResponseResourceItems record {
 
 # Get items details response
 public type ReceivingItemsResponse record {
+    # The items being shipped to Shipwire in the receiving
     ReceivingInstructionsRecipientsResponseResource 'resource?;
     # This is the HTTP status message
     string message?;
@@ -594,6 +602,7 @@ public type CancelReceivingResponse record {
 
 # Get receiving extended attributes response
 public type ReceivingExtendedAttributesResponse record {
+    # The extended attributes of the receiving
     ReceivingInstructionsRecipientsResponseResource 'resource?;
     # This is the HTTP status message
     string message?;
@@ -609,6 +618,7 @@ public type Arrangement record {
     string phone?;
     # Contact name of the person from Shipwire system responsible for coordinating with the carrier or supplier for arranging delivery if needed
     string contact?;
+    # The arrangement type, which tells Shipwire how the shipment will be delivered to the warehouse
     "none"|"overseas"|"label"|"pickup"|"ltlpickup"|"portpickup" 'type?;
 };
 
